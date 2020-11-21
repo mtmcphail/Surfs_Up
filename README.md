@@ -99,7 +99,7 @@ The breakdown of weather type by month is detailed below.
 As suspected, **August** does have the highest percentage of "perfect" days:  
 ![temps6](./Resources/aug_wtype.png) 
 
-**March** has the highest number of "poor" days.
+**March** has the highest number of "poor" days:
 ![temps](./Resources/mar_wtype.png)
  
 
