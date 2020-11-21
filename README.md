@@ -40,8 +40,8 @@ The temperature data provided in **hawaii.sqlite** details daily information for
 
 Items to note from these results:
 
-1.  The **difference in minimum temperature** between June (summer equinox) and December (winter equinox) is only **8 degrees**
-2.  The **difference in maximum temperature** is even less, only **2 degrees**
+1.  The **difference in minimum temperature** between June (summer equinox) and December (winter equinox) is only **8 degrees**.
+2.  The **difference in maximum temperature** is even less, only **2 degrees**.
 3.  Not surprisingly, the **average temperature differs by only 3.8 degrees**.  
 4. However, looking at the distribution of the temperatures, it appears that December has well over 50% of its daily temperatures 73 degrees and below, while June has only 25%. 
 ![temps2](./Resources/jun_dec_hist.png)
@@ -49,9 +49,15 @@ Items to note from these results:
 Let's dig a little deeper into the number of warm, surfable days in June and December...and how about the precipitation in these months?  Chilly and rainy is not a good combination for business!
 
 ## Next Steps
-By merging the percipitation data with the daily temperature, we can get an idea of how many days are raining and/or cool (below 73 degrees) that would make decrease the demand for ice cream and/or surfing! Since we want only one data point per date for both variables, we pick data from station **#USC00519281**, which appears to provide the most complete data set. 
+By merging the percipitation data with the daily temperature, we can get an idea of how many days are raining and/or cool (below 73 degrees) that would decrease the demand for ice cream and/or surfing! 
 
-A defined function, ```weather```, is created that can easily be refactored to include additional - *or different* - weather conditions scenarios as necessary - whatever W. Avy considers to be best (and worst) for business. 
+Since we want only one data point per date for both variables, we pick data from station **#USC00519281**, which appears to provide the most complete data set. 
+
+Query:  
+```all = session.query(Measurement.date, Measurement.tobs, Measurement.prcp).\```  
+```filter(Measurement.station == 'USC00519281').all()```
+
+A defined function, ```weather```, is created that can easily be refactored to include additional - or different - weather conditions scenarios as necessary, or whatever W. Avy considers to be best (and worst) for business. 
 
 For this analysis, the function ```weather``` creates a variable ```weather_type``` that indicates whether the daily weather is
 
@@ -60,12 +66,24 @@ For this analysis, the function ```weather``` creates a variable ```weather_type
 *  "cool dry" = temperature below 73 degrees (F) and no precipitation
 *  "warm rain" = temperature at or above 73 degrees (F) and any level of precipitation
 
+```
+def weather(df):
+  if df['temperature'] >= 73.0 and df['precipitation'] <= 0.00:
+    return 'perfect'
+  elif df['temperature'] >= 73.0 and df['precipitation'] > 0.00:
+    return 'warm rain'   
+  elif df['temperature'] < 73.0 and df['precipitation'] <= 0.00:
+    return 'cool dry'
+  else:
+    return 'poor'
+```
+
 Applying the above conditions, we see that while the variance in average temperatures between December and June is not huge (4 degrees as demonstrated earlier), there is quite a difference in the number (or percentage) of "good" weather days vs "poor" for June and December:
 ![temps3](./Resources/jun_wtype.png)
 
 ![temps4](./Resources/dec_wtype.png)
 
-**December has 55.3% poor days**, and only **3.7% perfect days** (3 or above degrees and rain); while **June has 38.1% poor days**, and **almost 4X the "perfect" days**. 
+**December has 55.3% poor days**, and only **3.7% perfect days** (73 or above degrees and rain); while **June has 38.1% poor days**, and **almost 4X the "perfect" days**. 
 
 **Clearly, December is not a good month to launch, but is June the best month?**  
 Looking at all 12 months over the 6 years between 2010 and 2016, **August has the highest average daily temperature of 75.4 degrees**, while March has the highest average monthly rainfall of 9.7 inches.  
