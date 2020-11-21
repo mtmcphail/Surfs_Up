@@ -79,9 +79,7 @@ def weather(df):
 ```
 
 Applying the above conditions, we see that while the variance in average temperatures between December and June is not huge (4 degrees as demonstrated earlier), there is quite a difference in the number (or percentage) of "good" weather days vs "poor" for June and December:
-![temps3](./Resources/jun_wtype.png)
-
-![temps4](./Resources/dec_wtype.png)
+![temps3](./Resources/jun_dec_graph.png)
 
 **December has 55.3% poor days**, and only **3.7% perfect days** (73 or above degrees and rain); while **June has 38.1% poor days**, and **almost 4X the "perfect" days**. 
 
@@ -96,14 +94,12 @@ The breakdown of weather type by month is detailed below.
 
 ![summary](./Resources/weather_by_month.png)
 
-As suspected, **August** does have the highest percentage of "perfect" days:  
-![temps6](./Resources/aug_wtype.png) 
-
-**March** has the highest number of "poor" days:
-![temps](./Resources/mar_wtype.png)
+As suspected, **August** does have the highest percentage of "perfect" days, and March has the highest number of "poor" days:
  
+![temps6](./Resources/mar_aug_graph.png) 
+
 
 # Summary
 Examining weather data can certainly help influence the decision when to launch our new business, a business that is greatly dependent on weather conditions.
 
-The analysis can go further, especially if additional data collected and layered in; tourism traffic for example. Perhaps August has the warmest days and the least precipiation, but is it a time of year people travel to Hawaii?   Additional databases and queries are needed to answer that!
+The analysis can go further, especially if additional data collected and layered in; **tourism** traffic for example. Perhaps August has the warmest days and the least precipiation, but is it a time of year people travel to Hawaii?   Additional databases and queries are needed to answer that!
